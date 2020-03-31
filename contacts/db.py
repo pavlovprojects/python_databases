@@ -1,6 +1,4 @@
 import sqlite3
-import mysql.connector
-import psycopg2
 
 DB = "contacts"
 
@@ -19,35 +17,8 @@ class SqliteConnector:
         self.connection.close()
 
 
-class RDBConnector:
-
-    def __init__(self, driver='mysql', password='root', user='root', port="3306", host="localhost",
-                 database="contacts"):
-        self.data = {'password': password,
-                     'user': user,
-                     'port': port,
-                     'host': host,
-                     'database': database}
-        if driver == 'mysql':
-            self.connection = mysql.connector.connect(**self.data)
-        elif driver == 'pg':
-            self.connection = psycopg2.connect(**self.data)
-        with open("sql_templates/contacts.sql", "r") as script:
-            self.connection.cursor().execute(script.read())
-        self.cursor = self.connection.cursor()
-
-    def __del__(self):
-        print('Connection closed!')
-        self.connection.close()
-
-
-def contacts_db(db_name='mysql'):
-    if db_name not in ['sqlite', 'mysql', 'pg']:
-        raise ValueError("Not allowed database")
-    if db_name == 'sqlite':
-        return SqliteConnector('simple.sqlite')
-    else:
-        return RDBConnector(db_name)
+def contacts_db():
+    return SqliteConnector('simple.sqlite')
 
 
 def _execute(sql=None, params=None):
@@ -64,7 +35,7 @@ def _execute(sql=None, params=None):
 
 
 def insert_contact(params: tuple):
-    sql = "INSERT INTO {DB} (name, email, phone, address) VALUES (%s, %s, %s, %s)".format(DB=DB)
+    sql = "INSERT INTO {DB} (name, email, phone, address) VALUES (?, ?, ?, ?)".format(DB=DB)
     _execute(sql=sql, params=params)
 
 
@@ -81,7 +52,6 @@ def select_contact(name):
 
 
 def get_all_rows():
-    # How to get data with description
     # https://stackoverflow.com/questions/31745613/fetching-mysql-data-as-python-dictionary
     db = contacts_db()
     sql = "SELECT * FROM {DB}".format(DB=DB)
