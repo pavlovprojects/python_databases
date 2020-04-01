@@ -50,8 +50,8 @@ cursor = connection.cursor()
 
 ```python
 # SQLite
-sql = "INSERT INTO {DB_NAME} (name, email, phone, address) VALUES (%s, %s, %s, %s)".format(DB=DB_NAME)
-data = ("Vasiliy", "vasiliy@mail.ru", "+79160001234", "Moscow")
+sql = "INSERT INTO {DB_NAME} (name, email, phone, address) VALUES (?, ?, ?, ?)".format(DB=DB_NAME)
+data = ("Vasiliy", "vasiliy@mail.ru", "+7999999999", "Moscow")
 connection.execute(sql, data)
 connection.commit()
 ```
