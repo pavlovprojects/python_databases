@@ -1,17 +1,18 @@
 import sqlite3
 
-connection = sqlite3.connect("db.sqlite")
+connection = sqlite3.connect("data.sqlite")
+cursor = connection.cursor()
 
-sql = "UPDATE contacts SET name = 'TEST' WHERE name = 'Vasya'"
+# Bad example
+sql = "UPDATE contacts SET address = 'TEST' WHERE name = 'Vasiliy'"
 
-connection.execute(sql)
+cursor.execute(sql)
+connection.commit()
 
-# connection.commit()
+sql = "UPDATE contacts SET name = ? WHERE name = ?"
+data = ("HELLOTEST", "Vasiliy")
 
-sql = "UPDATE contacts SET email = 'new_email2' WHERE email = 'new_email'"
-
-connection.execute(sql)
-
-# connection.commit()
+cursor.execute(sql, data)
+connection.commit()
 
 connection.close()

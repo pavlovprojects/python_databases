@@ -12,38 +12,42 @@
 
 DB_NAME = 'contacts'
 TABLE = 'contacts'
+HOST = '192.168.1.75'
 
 import mysql.connector
 
-connection = mysql.connector.connect(user='root', password='root', host='0.0.0.0', port='3306')
+connection = mysql.connector.connect(user='root', password='{PASSWORD}', host=HOST, port='3306')
 cursor = connection.cursor()
 
+# Creating database
 cursor.execute("CREATE DATABASE IF NOT EXISTS {} DEFAULT CHARACTER SET 'utf8'".format(DB_NAME))
 
+# Switch to created database
 cursor.execute("USE {}".format(DB_NAME))
 
+# Creating table
 with open("contacts_table.sql", "r") as script:
     cursor.execute(script.read())
 
 
 # # Добавление одного кортежа данных
-# sql = "INSERT INTO contacts (name, phone, email, adress) VALUES (%s, %s, %s, %s)"
-# values = ("Vasya1", "89009009999", None, "Moscow")
-# cursor.execute(sql, values)
-# connection.commit()
+sql = "INSERT INTO contacts (name, phone, email, adress) VALUES (%s, %s, %s, %s)"
+values = ("Vasya1", "89009009999", None, "Moscow")
+cursor.execute(sql, values)
+connection.commit()
 
 
 # # Множественное обавление
-# values = [
-#     ("Vasya000", "89009009999", None, "Moscow"),
-#     ("Vasya2", "89009009999", None, "Moscow"),
-#     ("Vasya3", "89009009999", None, "Moscow"),
-#     ("Vasya5", "89009009999", None, "Moscow"),
-# ]
-# sql = "INSERT INTO contacts (name, phone, email, adress) VALUES (%s, %s, %s, %s)"
-#
-# cursor.executemany(sql, values)
-# connection.commit()
+values = [
+    ("Vasya000", "89009009999", None, "Moscow"),
+    ("Vasya2", "89009009999", None, "Moscow"),
+    ("Vasya3", "89009009999", None, "Moscow"),
+    ("Vasya5", "89009009999", None, "Moscow"),
+]
+sql = "INSERT INTO contacts (name, phone, email, adress) VALUES (%s, %s, %s, %s)"
+
+cursor.executemany(sql, values)
+connection.commit()
 
 cursor.close()
 connection.close()

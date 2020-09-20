@@ -1,7 +1,8 @@
-CREATE TABLE IF NOT EXISTS contacts (
+CREATE TABLE IF NOT EXISTS contacts
+(
     id INT(32) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name varchar(255) UNIQUE NOT NULL,
-    email varchar(255),
-    phone varchar(255) NOT NULL,
-    adress varchar(255)
+    name VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(255) NOT NULL,
+    adress VARCHAR(255)
 );

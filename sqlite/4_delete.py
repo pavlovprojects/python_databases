@@ -1,11 +1,14 @@
 import sqlite3
 
-connection = sqlite3.connect("db.sqlite")
+connection = sqlite3.connect("data.sqlite")
+cursor = connection.cursor()
 
-sql = "DELETE FROM contacts WHERE name = ?"
+# cursor.execute("DROP TABLE contacts;")
+cursor.execute("DROP TABLE IF EXISTS contacts;")
 
-connection.execute(sql, ("TEST",))
-
+# sql = "DELETE FROM contacts WHERE name = ?"
+#
+# cursor.execute(sql, ("HELLOTEST",))
 # connection.commit()
 
 connection.close()

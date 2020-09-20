@@ -1,4 +1,4 @@
-create TABLE IF NOT EXISTS contacts
+CREATE TABLE IF NOT EXISTS contacts
 (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,

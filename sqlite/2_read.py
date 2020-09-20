@@ -1,11 +1,13 @@
 import sqlite3
 
-connection = sqlite3.connect("db.sqlite")
+connection = sqlite3.connect("data.sqlite")
+cursor = connection.cursor()
 
 sql = "SELECT * FROM contacts WHERE name = 'Vasiliy'"
 
-r = connection.execute(sql)
+request_result = cursor.execute(sql)
 
-print(r.fetchone())
+for el in request_result:
+    print(el)
 
 connection.close()
