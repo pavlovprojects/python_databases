@@ -17,6 +17,7 @@ Libraries:
 import sqlite3
 
 connection = sqlite3.connect("simple.sqlite")
+cursor = connection.cursor()
 ```
 
 ```python
